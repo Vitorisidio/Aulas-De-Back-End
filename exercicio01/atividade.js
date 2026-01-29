@@ -10,19 +10,15 @@ var entradaDeDados = readline.createInterface({
 })
 
 entradaDeDados.question('por favor digite o seu nome:', function (nomeUsuario) {
-    console.log('O nome do usúario é: ' + nomeUsuario)
     
-    entradaDeDados.question("Favor digitar o seu primeiro valor:", function (valorUm) {
-        console.log('O primeiro valor é: ' + valorUm)
+    entradaDeDados.question("por favor digitar o seu primeiro valor:", function (valorUm) {
 
-        entradaDeDados.question("Favor digitar o seu segundo valor:", function (valorDois) {
-            console.log('O segundo valor é: ' + valorUm)
+        entradaDeDados.question("por favor digitar o seu segundo valor:", function (valorDois) {
 
-            entradaDeDados.question("Favor digitar o seu terceiro valor:", function (valorTres) {
-               
+            entradaDeDados.question("por favor digitar o seu terceiro valor:", function (valorTres) {
 
-        
-               let valor = Number(valorUm)+Number(valorDois)+Number(valorTres) 
+               var valor = Number(valorUm)+Number(valorDois)+Number(valorTres) // A classe Number converte uma String para Número
+               console.log('O nome do usúario é: ' + nomeUsuario) 
                console.log("O resultado é: " + valor)
             })
 
