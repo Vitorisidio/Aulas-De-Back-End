@@ -56,7 +56,6 @@ entradaDeDados.question('Digite o nome do aluno:', function (nome) {
                     //tratamento de Dados
 
                     /*
-
                     Operadores de comparação
                     == -> permite comparar a igualdade de duas variáveis
                     < -> permite comparar valores menores
@@ -68,7 +67,6 @@ entradaDeDados.question('Digite o nome do aluno:', function (nome) {
                     !== -> permite comparar a diferença de conteúdo e a igualdade de tipos de dado
                     ==! -> permite comparar a igualdade de conteúdo e a diferença de tipos de dado
                     !=! -> permite comparar a diferença de conteúdo e a diferença de tipos de dado
-
                     */
 
                     // VALIDAÇÃO DE ENTRADAS VAZIA
@@ -77,14 +75,40 @@ entradaDeDados.question('Digite o nome do aluno:', function (nome) {
                         //Validação limitada de notas
                     }else if( nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100){
                         console.log('ERRO: AS NOTAS TEM QUE SER DE 0 ATÉ 100')
+
+                        /*
+                        Validação para entrada de erro nas notas
+                        isNaN() permite validar se o conteúdo da
+                        váriavel tem algum caracter ao invés de número
+                        */
+                    }else if(isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)){
+                        console.log('ERRO: NÃO É POSSIVEL CALCULAR A MÉDIA COM A ENTRADA DE LETRAS. POR FAVOR DIGITE APENAS NUMEROS')
                     }else{
-                        //Calculo da média
-                        let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4) )/4
-                        console.log('A média do Aluno ' + nomeAluno + " é: " + media)
-                    }
 
-                })//fecha nota 4
-
+                        /*
+                        conversões de tipos de dados
+                        parse Int() Permite converter uma String para um Número INTEIRO
+                        parse Float() Permite converter uma String para um Número DECIMAL
+                        Number() Permite converter uma String para um Número (INTEIRO OU DECIMAL)
+                        toFixed() Permite fixar a quantidade de casas decimais.
+                        */
+                       //Calculo da média
+                       let statusAluno
+                       let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4) )/4
+                       
+                       
+                       if( media >= 70){
+                           statusAluno = 'aprovado'
+                        }else if ( media >= 50 && media < 70){
+                            statusAluno = 'recuperação'
+                        }else{
+                            statusAluno = 'reprovado'
+                        }
+                        console.log('A média do Aluno ' + nomeAluno + " é: " + media.toFixed(2) + ' e está ' + statusAluno)
+                   }
+                   
+                    })//fecha nota 4
+                
             })//fecha nota 3
 
         })//fecha nota 2
