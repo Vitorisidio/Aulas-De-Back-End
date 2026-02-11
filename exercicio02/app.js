@@ -122,4 +122,4 @@ entradaDeDados.question('por favor digite o seu nome:', function (nomeUsuario) {
             })// fecha taxaDeJuros
         })// fecha ValorDaCompra
     })// fecha nomeProduto
-})// fecha nomeUsuario
+})// fecha nomeUsuarios
