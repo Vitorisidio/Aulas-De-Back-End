@@ -26,35 +26,35 @@ entradaDeDados.question('por favor digite o seu nome:', function (nomeUsuario) {
                     if (!isNaN(nomeProduto)) {
                         console.log("Digite Um produto da loja")
                         entradaDeDados.close()
-                
+
                     }
 
                     if (isNaN(ValorDaCompra)) {
                         console.log("Digite um número válido para o valor da compra!")
                         entradaDeDados.close()
-                        
+
                     } else if (Number(ValorDaCompra) <= 0) {
                         console.log("Digite um número maior que ZERO")
                         entradaDeDados.close()
-                        
+
                     }
 
                     if (isNaN(taxaDeJuros) || Number(taxaDeJuros) < 0 || Number(taxaDeJuros) > 100) {
                         console.log("Taxa de juros inválida!")
                         entradaDeDados.close()
-                        
+
                     }
-                    
-                    if (isNaN(tempo)||tempo <= 0 || tempo > 2) {
+
+                    if (isNaN(tempo) || tempo <= 0 || tempo > 2) {
                         console.log("Valor Invalido, escolha apenas 1 ou 2")
                         entradaDeDados.close()
-                        
+
                         //---------------------------------------------------------LOGICA------------------------------------------------------//
 
                         //---------------------------------------------------------LOGICA meses------------------------------------------------------//
 
                     } else if (tempo == 1) {
-                        
+
 
                         entradaDeDados.question('por favor digite a quantidade de parcelas EM MESES: ', function (parcelas/*a quantidade de parcelas em meses*/) {
 
@@ -91,7 +91,7 @@ entradaDeDados.question('por favor digite o seu nome:', function (nomeUsuario) {
 
                         entradaDeDados.question('por favor digite a quantidade de parcelas EM ANOS: ', function (parcelas /*a quantidade de parcelas em anos*/) {
 
-                         convercacao = parcelas*12 // converter anos em meses
+                            convercacao = parcelas * 12 // converter anos em meses
 
                             if (isNaN(parcelas) || Number(parcelas) <= 0) {
                                 console.log("valor de pagamento inválido!")
