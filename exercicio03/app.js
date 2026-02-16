@@ -14,9 +14,6 @@ const entradaDeDados = readline.createInterface({
     output: process.stdout
 })
 
-entradaDeDados.question('Digite o nome do usúario: ', function (nome) {
-    let nomeUsuario = nome
-
     entradaDeDados.question('qual operação matemática deseja realizar?: ', function (formula) {
         let operador = formula
 
@@ -26,20 +23,30 @@ entradaDeDados.question('Digite o nome do usúario: ', function (nome) {
             entradaDeDados.question('Digite o SEGUNDO numero para realizar a conta: ', function (segundo) {
                 let OperandoDois = segundo
 
-                let calculos = require('./modulo/calculos.js')
+                let calculos = require('./modulo/calculos.js')  // Importa o arquivo calculos.js.
+                                                                // Assim a lógica dos cálculos fica separada do app.js.
+                                                                // O app apenas chama as funções e recebe o resultado.
 
-                let erro = calculos.erros(nomeUsuario, operador, OperandoUM, OperandoDois)
+                // Corrige vírgula para ponto nos números digitados
+                OperandoUM = calculos.decimais(OperandoUM)
+                OperandoDois = calculos.decimais(OperandoDois)
+
+                // Executa a operação matemática escolhida
                 let resultado = calculos.operacao(operador, OperandoUM, OperandoDois)
-                if(erro == false){
+
+                // Valida os dados informados (verifica erros)
+                let erro = calculos.erros(operador, OperandoUM, OperandoDois)
+                
+                if (erro == false) {
+                    // Se houver erro, encerra o programa
                     console.log(erro)
                     entradaDeDados.close()
-                }else{
+                } else {
+                    // Se não houver erro, mostra o resultado formatado com 2 casas decimais
                     console.log(resultado.toFixed(2))
+                    entradaDeDados.close()
                 }
-
-
 
             })
         })
     })
-})
