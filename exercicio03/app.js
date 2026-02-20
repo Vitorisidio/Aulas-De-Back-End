@@ -46,7 +46,7 @@ const entradaDeDados = readline.createInterface({
                     console.log(resultado.toFixed(2))
                     entradaDeDados.close()
                 }
-
+                
             })
         })
     })

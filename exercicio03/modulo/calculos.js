@@ -42,8 +42,9 @@ function erros(entradaFormula, entradaPrimeiroNumero, entradasegundoNumero) {
 
 //TRANSFORMA VIRGULA EM PONTO EM CASO DE CASAS DECIMAIS PARA PODER REALIZAR A CONTA
 function decimais(virgula) {
-        return virgula.replace(",", ".")
+    return virgula.replace(",", ".")
 }
+
 
 //torna as duas funções publicas para os arquivos do projeto Aula 3
 module.exports = {
