@@ -33,23 +33,34 @@ const calcular = function (numero1, numero2, operador) {
 // OUTRA fomra de fazer o processamento da função
     switch (operadorMatematico) {
         case 'SOMAR':
-            resultado = valor1 + valor2
+            resultado = somar(valor1, valor2)
             break;
         case 'SUBTRAIR':
-            resultado = valor1 - valor2
+            resultado = subtrair(valor1, valor2)
             break;
         case 'MULTIPLICAR':
-            resultado = valor1 * valor2
+            resultado = multiplicar(valor1, valor2)
             break;
         case 'DIVIDIR':
-            resultado = valor1 / valor2
+            resultado = dividir(valor1, valor2)
             break;
     }
-
-
-
     //Saída
     return resultado
-
 }
-console.log(calcular(10, 20, 'SOMAR'))
+//4 funções no metodo seta para realizar as operações matemáticas
+const somar =           (numero1, numero2) => Number(numero1) + Number(numero2)
+const subtrair =        (numero1, numero2) => Number(numero1) - Number(numero2)
+const multiplicar =     (numero1, numero2) => Number(numero1) * Number(numero2)
+const dividir =         (numero1, numero2) => Number(numero1) / Number(numero2)
+
+
+
+
+module.exports ={
+    calcular,
+    somar,
+    subtrair,
+    multiplicar,
+    dividir
+}
