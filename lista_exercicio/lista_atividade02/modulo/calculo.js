@@ -9,12 +9,12 @@ const calculo = function (nota1, nota2, nota3) {
         console.log('Reprovado', resultado.toFixed(1))
     } else {
         console.log('Recuperação', resultado.toFixed(1))
-        return false
+        return resultado
     }
 
 }
 
-const mediaRecuperacao = (nota1, nota2, nota3, nota4) => (media(nota1, nota2, nota3) + Number(nota4)) / 2
+const mediaRecuperacao = (mediaAnterior, nota4) => (Number(mediaAnterior) + Number(nota4)) / 2
 
 const reuperacacao = function (media, nota4) {
 
