@@ -7,15 +7,15 @@ function sexo(sexoDoProfessor, sexoDoAluno) {
     let aluno
 
     if (sexoDoProfessor == "FEMININO") {
-        professor = "professora"
+        professor = "Professora"
     } else if (sexoDoProfessor == "MASCULINO") {
-        professor = "professor"
+        professor = "Professor"
     }
 
     if (sexoDoAluno == "FEMININO") {
-        aluno = "Aluna"
+        aluno = "A Aluna"
     } else if (sexoDoAluno == "MASCULINO") {
-        aluno = "Aluno"
+        aluno = "O Aluno"
     }
     return { professor, aluno }
 }
@@ -25,7 +25,7 @@ function relatorio(nomeAluno, nomeProfessor, sexoProfessor, sexoAluno, nomeCurso
 
     console.log("================================================================================================")
     console.log(generos.aluno + " " + nomeAluno + ' foi ' + status.situacao + ' na disciplina ' + nomeDisciplina)
-    console.log('Curso ' + nomeCurso)
+    console.log('Curso: ' + nomeCurso)
     console.log(`Disciplina: ${nomeDisciplina}`)
     console.log(generos.professor + ": " + nomeProfessor)
     console.log('notas ' + numeroUm, numeroDois, numeroTres)

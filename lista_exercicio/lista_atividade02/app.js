@@ -11,16 +11,16 @@ const { relatorio, relatorioExame } = require("./modulo/relatorio.js")
 
 
 
-entradaDeDados.question('Por favor digite o Nome do Aluno: ', function (aluno) {
+entradaDeDados.question('Por favor digite o Nome do Aluno(a): ', function (aluno) {
     let nomeAluno = aluno.toUpperCase()
 
-    entradaDeDados.question("Por Favor digite o Nome do Professor: ", function (professor) {
+    entradaDeDados.question("Por Favor digite o Nome do Professor(a): ", function (professor) {
         let nomeProfessor = professor.toUpperCase()
 
-        entradaDeDados.question("Por Favor digitar o sexo do Aluno: ", function (sexoAluno) {
+        entradaDeDados.question("Por Favor digitar o sexo do Aluno(a) (Digite masculino ou feminino): ", function (sexoAluno) {
             let sexoDoAluno = sexoAluno.toUpperCase()
 
-            entradaDeDados.question("Por Favor digitar o sexo do Professor: ", function (sexoProfessor) {
+            entradaDeDados.question("Por Favor digitar o sexo do Professor(a) (Digite masculino ou feminino): ", function (sexoProfessor) {
                 let sexoDoProfessor = sexoProfessor.toUpperCase()
 
                 entradaDeDados.question("Por Favor digite o Nome do Curso: ", function (curso) {
