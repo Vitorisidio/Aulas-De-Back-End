@@ -5,6 +5,16 @@ function validarDados(nomeAlunos, nomeProfessor, sexoAluno, sexoProfessor, nomeC
         return false
     }
 
+    if (sexoAluno != 'MASCULINO' && sexoAluno != 'FEMININO') {
+        console.log('ERRO: Preencha o sexo do aluno(a) apenas com feminino ou masculino.')
+        return false
+    }
+
+    if (sexoProfessor != 'MASCULINO' && sexoProfessor != 'FEMININO') {
+        console.log('ERRO: Preencha o sexo do professor(a) apenas com feminino ou masculino.')
+        return false
+    }
+
     if (!isNaN(nomeAlunos) || !isNaN(nomeProfessor) || !isNaN(sexoAluno) || !isNaN(sexoProfessor) || !isNaN(nomeCurso) || !isNaN(nomeDisciplina)) {
         console.log('ERRO: Campos de texto só é permitido letras.')
         return false
@@ -25,6 +35,7 @@ function validarDados(nomeAlunos, nomeProfessor, sexoAluno, sexoProfessor, nomeC
         console.log('ERRO: Nota deve estar entre 0 e 100.')
         return false
     }
+
     return true
 
 }

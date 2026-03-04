@@ -7,7 +7,7 @@ var entradaDeDados = readline.createInterface({
 
 const calculosMedia = require("./modulo/calculo.js")
 const { validarDados, validarNotaExame } = require("./modulo/tratativas.js")
-const exibirRelatorio  = require("./modulo/relatorio.js")
+const { relatorio, relatorioExame } = require("./modulo/relatorio.js")
 
 
 
@@ -42,16 +42,23 @@ entradaDeDados.question('Por favor digite o Nome do Aluno: ', function (aluno) {
                                     if (validarDados(nomeAluno, nomeProfessor, sexoDoAluno, sexoDoProfessor, nomeCurso, nomeDisciplina, numeroUm, numeroDois, numeroTres)) {
                                         let status = calculosMedia.calculo(numeroUm, numeroDois, numeroTres)
 
-                                        if (status !== undefined) {
+
+
+                                        if (status.situacao == "RECUPERAÇÃO") {
                                             entradaDeDados.question("Por Favor digitar a nota do exame: ", function (valor4) {
                                                 let numeroQuatro = Number(valor4)
 
+
                                                 if (validarNotaExame(numeroQuatro)) {
-                                                    calculosMedia.reuperacacao(status, numeroQuatro)
+                                                    let resultadoFinal = calculosMedia.reuperacacao(status.media, numeroQuatro)
+                                                    relatorioExame(nomeAluno, nomeProfessor, sexoProfessor, sexoAluno, nomeCurso, nomeDisciplina, numeroUm, numeroDois, numeroTres, numeroQuatro, resultadoFinal)
                                                 }
                                                 entradaDeDados.close()
                                             })
+
+
                                         } else {
+                                            relatorio(nomeAluno, nomeProfessor, sexoProfessor, sexoAluno, nomeCurso, nomeDisciplina, numeroUm, numeroDois, numeroTres, status)
                                             entradaDeDados.close()
                                         }
 
