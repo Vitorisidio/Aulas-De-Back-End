@@ -1,6 +1,6 @@
-var readline = require("readline")
+const readline = require("readline")
 
-var entradaDeDados = readline.createInterface({
+const entradaDeDados = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 })
