@@ -18,4 +18,5 @@ const calcular = function (tabuadaInicial, tabuadaFinal, numeroInicial, numeroFi
     }
 
 }
-calcular(1, 10, 0, 10)
+
+module.exports = {calcular}
