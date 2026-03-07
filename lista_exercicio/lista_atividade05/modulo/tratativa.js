@@ -1,6 +1,9 @@
-const tratativa = function (numeroInicial, numeroFinal) {
+const tratativa = function (inicio, final) {
 
-    if (numeroInicial == "" || numeroFinal == "") {
+        numeroInicial = Number(inicio)
+        numeroFinal = Number(final)
+
+    if (numeroInicial === "" || numeroFinal === "") {
         console.log("ERRO: não é permitido campo vazio")
         return false
     }
@@ -28,7 +31,7 @@ const tratativa = function (numeroInicial, numeroFinal) {
         return false
     }
 
-            if (numeroInicial == numeroFinal || numeroFinal == numeroInicial) {
+            if (numeroInicial == numeroFinal) {
         console.log("ERRO: não é permitido o número inical e o numero final serem iguais")
         return false
     }
