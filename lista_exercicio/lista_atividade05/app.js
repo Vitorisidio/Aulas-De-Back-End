@@ -15,7 +15,7 @@ entradaDeDados.question('Por favor digite um numero inicial de 0 até 500: ', fu
         entradaDeDados.question("Mostrar Pares - [1]" + "\n" + "Mostrar Ímpares - [2]" + "\n" + "Mostrar Ambos - [3]" + "\n" + 'Por favor escolha uma opção: '  , function (escolha) {
             let opcao = escolha
 
-            if (validarDados.tratativa(numeroInicial, numeroFinal)) {
+            if (validarDados.tratativa(numeroInicial, numeroFinal, opcao)) {
 
                 calculo.numero(numeroInicial, numeroFinal, opcao)
 

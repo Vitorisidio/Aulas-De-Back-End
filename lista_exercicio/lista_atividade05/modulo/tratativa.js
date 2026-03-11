@@ -1,7 +1,8 @@
-const tratativa = function (inicio, final) {
+const tratativa = function (inicio, final, escolha) {
 
-        numeroInicial = Number(inicio)
-        numeroFinal = Number(final)
+    opcao = Number(escolha)
+    numeroInicial = Number(inicio)
+    numeroFinal = Number(final)
 
     if (numeroInicial === "" || numeroFinal === "") {
         console.log("ERRO: não é permitido campo vazio")
@@ -9,13 +10,13 @@ const tratativa = function (inicio, final) {
     }
 
 
-    if (numeroInicial < 0 || numeroInicial > 500 ) {
+    if (numeroInicial < 0 || numeroInicial > 500) {
         console.log("ERRO: Digite no número inicial de 0 a 500")
         return false
     }
 
 
-    if ( numeroFinal < 100 || numeroFinal > 1000) {
+    if (numeroFinal < 100 || numeroFinal > 1000) {
         console.log("ERRO: Digite no número Final de 100 a 1000")
         return false
     }
@@ -26,13 +27,18 @@ const tratativa = function (inicio, final) {
         return false
     }
 
-        if (numeroInicial > numeroFinal) {
+    if (numeroInicial > numeroFinal) {
         console.log("ERRO: não é permitido o número inical ser maior que o numero final")
         return false
     }
 
-            if (numeroInicial == numeroFinal) {
+    if (numeroInicial == numeroFinal) {
         console.log("ERRO: não é permitido o número inical e o numero final serem iguais")
+        return false
+    }
+
+    if (isNaN(opcao) || opcao < 1 || opcao > 3) {
+        console.log("ERRO: escolha uma opção válida (1, 2 ou 3)")
         return false
     }
     return true
