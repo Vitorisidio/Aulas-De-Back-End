@@ -21,17 +21,16 @@ const getListaDeEstados = function () {
     return resultado
 }
 
-
-const getDadosEstado = function () {
-    //varivel para filtro de siglas de estados 
-    let nome = "SP"
+//parametro para filtro de siglas de estados 
+const getDadosEstado = function (sigla) {
+    
     // Começa como false (caso não encontre o estado)
     let resultado = false
 
     // Percorre todos os estados do arquivo estados_cidades.js
     infoEstados.listaDeEstados.estados.forEach(function (estado) {
         // Compara a sigla do estado com o valor digitado (ignorando maiúscula/minúscula)
-        if (String(estado.sigla).toLocaleUpperCase() == nome.toLocaleUpperCase()) {
+        if (String(estado.sigla).toLocaleUpperCase() == String(sigla).toLocaleUpperCase()) {
             // Se encontrar, cria um objeto com os dados do estado
             resultado = {
                 uf: estado.sigla,
@@ -47,16 +46,16 @@ const getDadosEstado = function () {
     return resultado
 }
 
-const getCapitalEstado = function () {
-    //varivel para filtro de siglas de estados 
-    let nome = "SP"
+//parametro para filtro de siglas de estados 
+const getCapitalEstado = function (sigla) {
+
     // Começa como false (caso não encontre o estado)
     let resultado = false
 
     // Percorre todos os estados do arquivo estados_cidades.js
     infoEstados.listaDeEstados.estados.forEach(function (capital) {
         // Compara a sigla do estado com o valor digitado (ignorando maiúscula/minúscula)
-        if (String(capital.sigla).toLocaleUpperCase() == nome.toLocaleUpperCase()) {
+        if (String(capital.sigla).toLocaleUpperCase() == String(sigla).toLocaleUpperCase()) {
             // Se encontrar, cria um objeto com os dados do estado
             resultado = {
                 uf: capital.sigla,
@@ -72,9 +71,8 @@ const getCapitalEstado = function () {
 }
 
 
-const getEstadosRegiao = function () {
-    //varivel para filtro de região 
-    let regiaoFiltro = "nordeste"
+//parametro para filtro de região 
+const getEstadosRegiao = function (regiaoNome) {
     //Cria um array vazio
     let listaEstados = []
     // Começa como false (caso não encontre a região)
@@ -83,7 +81,7 @@ const getEstadosRegiao = function () {
     // Percorre todos os estados do arquivo estados_cidades.js
     infoEstados.listaDeEstados.estados.forEach(function (estado) {
         // Compara a região com o valor digitado (ignorando maiúscula/minúscula)
-        if (String(estado.regiao).toLocaleUpperCase() == regiaoFiltro.toLocaleUpperCase()) {
+        if (String(estado.regiao).toLocaleUpperCase() == String(regiaoNome).toLocaleUpperCase()) {
             // Adiciona o estado encontrado na lista
             listaEstados.push({
                 uf: estado.nome,
@@ -135,16 +133,15 @@ const getCapitalPais = function () {
 
 }
 
-const getCidades = function () {
-    // Variável para armazenar a sigla do estado que será filtrado
-    let filtro = "ac"
+//parametro para filtro de siglas de estados 
+const getCidades = function (sigla) {
     // Começa como false (caso não encontre o estado)
     let resultado = false
 
     // Percorre todos os estados do arquivo estados_cidades.js
     infoEstados.listaDeEstados.estados.forEach(function (estado) {
         // Compara a sigla do estado com o filtro (ignorando maiúscula/minúscula)
-        if (String(estado.sigla).toLocaleUpperCase() == filtro.toLocaleUpperCase()) {
+        if (String(estado.sigla).toLocaleUpperCase() == String(sigla).toLocaleUpperCase()) {
             // Cria um array vazio para armazenar os nomes das cidades
             let listaCidade = []
             // Percorre todas as cidades do estado encontrado
@@ -177,17 +174,17 @@ console.log(uf)
 console.log("\n")
 
 //FUNÇÃO DADOS DE UM ESTADO ESPECIFICO
-const estado = getDadosEstado()
+const estado = getDadosEstado("sp")
 console.log(estado)
 console.log("\n")
 
 //FUNÇÃO REFERENTE A CAPITAL DE UM ESTADO ESPECIFICO
-const capitalEstado = getCapitalEstado()
+const capitalEstado = getCapitalEstado("rj")
 console.log(capitalEstado)
 console.log("\n")
 
 //FUNÇÃO REFERENTE as informações aos estados
-const regiao = getEstadosRegiao()
+const regiao = getEstadosRegiao("Sul")
 console.log(regiao)
 console.log("\n")
 
@@ -197,6 +194,17 @@ console.log(capitalPais)
 console.log("\n")
 
 //FUNÇÃO REFERENTE as informações aos estados que ja foram capitais do Brasil
-const listaCidade = getCidades()
+const listaCidade = getCidades("ac")
 console.log(listaCidade)
 console.log("\n")
+
+
+
+module.exports = {
+    getListaDeEstados,
+    getDadosEstado,
+    getCapitalEstado,
+    getEstadosRegiao,
+    getCapitalPais,
+    getCidades
+}
