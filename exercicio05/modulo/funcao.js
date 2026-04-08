@@ -37,4 +37,26 @@ const dadosUsuario = function (numero) {
     }
     
 }
-console.log(dadosUsuario('11966578996'))
+//console.log(dadosUsuario('11966578996'))
+
+const dadosContatos = function (numero) {
+    const listaContatos = []
+    let resultado = false
+    contatos["whats-users"].forEach(function (usuario) {
+        if ((usuario.number) == numero) {
+            listaContatos.push({
+                nome: usuario.contacts.name,
+                descricao: usuario.contacts.description,
+                imagem: usuario.contacts.image,
+            })
+         resultado = true
+        }
+    })
+    if (resultado) {
+        return listaContatos
+    } else {
+        return false
+    }
+    
+}
+console.log(dadosContatos('11966578996'))
