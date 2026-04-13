@@ -37,7 +37,7 @@ const dadosUsuario = function (numero) {
     }
 
 }
-console.log(dadosUsuario('11966578996'))
+//console.log(dadosUsuario('11966578996'))
 
 const dadosContatos = function (numero) {
     const listaContatos = []
@@ -167,3 +167,13 @@ const palavraChave = function (pesquisa, numero) {
     }
 }
 //console.log(palavraChave("doing", '11987876567'))
+
+
+export {
+    dadosGeral,
+    dadosUsuario,
+    dadosContatos,
+    dadosMensagens,
+    dadosconversa,
+    palavraChave
+}
