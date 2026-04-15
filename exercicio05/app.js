@@ -102,6 +102,51 @@ app.get("/v1/senai/whatsapp/dados/chave", function(request, response){
     }
 })
 
+app.get('/v1/senai/help', function (request, response) {
+
+    let docAPI = {
+        "API - description": "API para manipular dados de Números do Whatsapp",
+        "date": "2026-04-15",
+        "Development": "Vitor Isidio",
+        "version": "1.0",
+        "Endpoints": [
+            {
+                "id": 1,
+                "Rota 1": "/v1/senai/whatsapp/dados/geral",
+                "obs": "Retorna a Lista de todos os dados de usuário independente do número",
+            },
+            {
+                "id": 2,
+                "Rota 2": "/v1/senai/whatsapp/dados/usuario/11966578996",
+                "obs": "Retorna a Lista dos dados da conta do profile do usuário filtrado pelo número de telefone",
+            },
+            {
+                "id": 3,
+                "Rota 3": "/v1/senai/whatsapp/dados/contatos/:11966578996",
+                "obs": "Retorna a lista dos dados de contato para cada usuário filtrado pelo número",
+            },
+            {
+                "id": 4,
+                "Rota 4": "/v1/senai/whatsapp/dados/mensagens/11966578996",
+                "obs": "Retorna a Lista de todas as mensagens trocadas de uma conta de usuário",
+            },
+            {
+                "id": 5,
+                "Rota 5": "/v1/senai/whatsapp/dados/conversa?nome=Jane Smith&numero=11987876567",
+                "obs": "Retorna a Lista de uma conversa de um usuário e um contato filtrado primeiro pelo nome e depois pelo número de telefone",
+            },
+            {
+                "id": 6,
+                "Rota 6": "/v1/senai/whatsapp/dados/chave?pesquisa=leonid&numero=11987876567",
+                "obs": "Realizar um filtro como pesquisa de palavra chave com base em uma palavra nas conversas do usuário e do respectivo contato filtrado primeiro pela pesquisa e depois pelo número de telefone",
+            }
+        ]
+    }
+
+    response.status(200)
+    response.json(docAPI)
+})
+
 
 //serve para inicializar a Api para receber requisições
 app.listen(8080, function () {
