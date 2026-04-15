@@ -144,7 +144,7 @@ const palavraChave = function (pesquisa, numero) {
             }
             usuario.contacts.forEach(function (contato) {
                 contato.messages.forEach(function (mensagens) {
-                    if (mensagens.content.includes(pesquisa)) {
+                    if (mensagens.content.toLowerCase().includes(pesquisa.toLowerCase())) {
                         palavra.push({
                             nome: contato.name,
                             imagem: contato.image,
