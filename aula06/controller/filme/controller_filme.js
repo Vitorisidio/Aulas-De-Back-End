@@ -57,11 +57,64 @@ const atualizarNovoFilme = async function () {
 
 //Função para retornar todos os filmes
 const listarFilmes = async function () {
+    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        //chama a função do DAO para retornar a lista de todos os filmes
+        let result = await filmeDAO.selectAllFilme()
 
+        //Valida se o DAO conseguiu processar os dados
+        if (result) {
+            //Validação para verificar se existe conteúdo no array
+            if (result.length > 0) {
+                message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
+                message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
+                message.DEFAULT_MESSAGE.response.count = result.length
+                message.DEFAULT_MESSAGE.response.filme = result
+
+                return message.DEFAULT_MESSAGE //200 (Dados do Filme)
+
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_MODEL //500(model)
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500(controller)
+    }
 }
 
 //Função para buscar um novo filme pelo ID
-const buscarFilme = async function () {
+const buscarFilme = async function (id) {
+    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        if (id == '' || id == null || id == undefined || isNaN(id)) {
+            message.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
+            return message.ERROR_BAD_REQUEST //400
+        } else {
+            let result = await filmeDAO.selectByIdFilme(id)
+
+            if (result) {
+                if (result.length > 0) {
+                    message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
+                    message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
+                    message.DEFAULT_MESSAGE.response.filme = result
+
+                    return message.DEFAULT_MESSAGE//200
+                } else {
+                    return message.ERROR_NOT_FOUND//404
+                }
+            } else {
+                return message.ERROR_INTERNAL_SERVER_MODEL//500(model)
+            }
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER //500
+    }
 
 }
 

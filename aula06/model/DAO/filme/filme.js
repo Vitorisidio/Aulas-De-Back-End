@@ -57,10 +57,41 @@ const updateFilme = async function (filme) {
 
 //Função para retornar todos os dados da tabela de filme
 const selectAllFilme = async function () {
+    try {
+        //Script para retornar todos os filmes
+        let sql = 'select * from tbl_filme order by id desc'
+
+        //Executa no banco de dados o script SQL para retornar os filmes
+        let result = await knexConex.raw(sql)
+        
+        //Validação para verificar se o retorno no BD é um array
+        //Se o scriptSQL der erro, o banco não devolve um array
+        if(Array.isArray(result)){
+            return result[0]
+        }else{
+            return false
+        }
+    } catch (error) {
+        
+    }
 }
 
 // Função para retorna os dados do filme filtrando pelo ID
 const selectByIdFilme = async function (id) {
+    try {
+        let sql = `select * from tbl_filme where id=${id}`
+
+        let result = await knexConex.raw(sql)
+
+        if(Array.isArray(result)){
+            return result[0]
+        }else{
+            return false
+        }
+
+    } catch (error) {
+        return false
+    }
 }
 
 const deleteFilme = async function (id) {
