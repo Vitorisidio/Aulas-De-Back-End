@@ -53,6 +53,30 @@ const insertFilme = async function (filme) {
 
 //Função para atualizar um filme existente na tabela
 const updateFilme = async function (filme) {
+    //script para  atualizar o BD
+    try {
+        let sql = `update tbl_filme set
+                nome = '${filme.nome}',
+                data_lancamento = '${filme.data_lancamento}',
+                duracao = '${filme.duracao}',
+                sinopse = '${filme.sinopse}',
+                avaliacao = if('${filme.avaliacao}' = '', null, '${filme.avaliacao}'),
+                valor = '${filme.valor}',
+                capa = '${filme.capa}'
+                where id = ${filme.id}`
+        //executa o script SQL no BD
+        let result = await knexConex.raw(sql)
+    
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+        
+    } catch (error) {
+        return false
+    }
+
 }
 
 //Função para retornar todos os dados da tabela de filme
@@ -63,16 +87,16 @@ const selectAllFilme = async function () {
 
         //Executa no banco de dados o script SQL para retornar os filmes
         let result = await knexConex.raw(sql)
-        
+
         //Validação para verificar se o retorno no BD é um array
         //Se o scriptSQL der erro, o banco não devolve um array
-        if(Array.isArray(result)){
+        if (Array.isArray(result)) {
             return result[0]
-        }else{
+        } else {
             return false
         }
     } catch (error) {
-        
+
     }
 }
 
@@ -83,9 +107,9 @@ const selectByIdFilme = async function (id) {
 
         let result = await knexConex.raw(sql)
 
-        if(Array.isArray(result)){
+        if (Array.isArray(result)) {
             return result[0]
-        }else{
+        } else {
             return false
         }
 
@@ -95,6 +119,20 @@ const selectByIdFilme = async function (id) {
 }
 
 const deleteFilme = async function (id) {
+    try {
+        let sql = `delete from tbl_filme where id=${id}`
+
+        let result = await knexConex.raw(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+
+    } catch (error) {
+        return false
+    }
 }
 
 module.exports = {
