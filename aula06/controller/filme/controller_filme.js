@@ -33,9 +33,13 @@ const inserirNovoFilme = async function (filme, contentType) {
                 //Encaminha os dados do filme para o DAO
                 let result = await filmeDAO.insertFilme(filme)
                 if (result) { //status code 201
+
+                    filme.id = result
+
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_CREATED_ITEM.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_CREATED_ITEM.status_code
                     message.DEFAULT_MESSAGE.message = message.SUCCESS_CREATED_ITEM.message
+                    message.DEFAULT_MESSAGE.response = filme
                 } else {//status code 500
                     return message.ERROR_INTERNAL_SERVER_MODEL //Erro 500 model
                 }
@@ -78,6 +82,7 @@ const atualizarFilme = async function (filme, id, contentType) {
                         message.DEFAULT_MESSAGE.status = message.SUCCESS_UPDATED_ITEM.status
                         message.DEFAULT_MESSAGE.status_code = message.SUCCESS_UPDATED_ITEM.status_code
                         message.DEFAULT_MESSAGE.message = message.SUCCESS_UPDATED_ITEM.message
+                        message.DEFAULT_MESSAGE.response = filme
 
                         return message.DEFAULT_MESSAGE //200
 
@@ -139,7 +144,7 @@ const buscarFilme = async function (id) {
     //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
     let message = JSON.parse(JSON.stringify(config_message))
     try {
-        if (id == '' || id == null || id == undefined || isNaN(id)) {
+        if (id == undefined || id == '' || id == null || isNaN(id)) {
             message.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return message.ERROR_BAD_REQUEST //400
         } else {
@@ -167,55 +172,30 @@ const buscarFilme = async function (id) {
 }
 
 //Função para excluir um filme
-const excluirFilme = async function (filme, id, contentType) {
+const excluirFilme = async function (id) {
     //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
     let message = JSON.parse(JSON.stringify(config_message))
 
     try {
-        //Validação do Contenty type para receber apenas Json
-        if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            //validação para o ID incorreto
-            let resultBuscarID = await buscarFilme(id)
+        //validação do erro 400 e 404
+        let resultBuscarID = await buscarFilme(id)
 
-            //Se a função buscar encontrar o filme o atributo status do JSON será verdadeiro
-            //Isso significa que o filme existe na base, caso não retorne true, então
-            //O retorno da função poderá ser 400 ou 404 ou até mesmo um 500
-            if (resultBuscarID.status) {
-                let validar = await validarDados(filme)
+        //validação para verificar se o status é verdadeiro(se existe o filme)
+        if (resultBuscarID.status) {
+            //Chamar a função do DAO para excluir o filme
+            let result = await filmeDAO.deleteFilme(id)
 
-                //validação de campos obrigatórios para atualização(body)
-                if (!validar) {
-                    //Adiciono o atributo ID do Filme no JSON para ser enviado ao DAO
-                    filme.id = id
-
-                    //chama a função do DAO para atualizar o FIlme (dados e o ID)
-                    let result = await filmeDAO.updateFilme(filme)
-
-                    if (result) {
-                        message.DEFAULT_MESSAGE.status = message.SUCCESS_DELETE_ITEM.status
-                        message.DEFAULT_MESSAGE.status_code = message.SUCCESS_DELETE_ITEM.status_code
-                        message.DEFAULT_MESSAGE.message = message.SUCCESS_DELETE_ITEM.message
-
-                        return message.DEFAULT_MESSAGE //200
-
-                    } else {
-                        return message.ERROR_INTERNAL_SERVER_MODEL //500
-                    }
-
-                } else {
-                    return validar //400
-                }
+            if (result) {
+                return message.SUCCESS_DELETE_ITEM //200(Registro excluido)
             } else {
-                return resultBuscarID // 400 ou 404 ou 500
+                return message.ERROR_INTERNAL_SERVER_MODEL
             }
-
-
         } else {
-            return message.ERROR_CONTENT_TYPE //415
+            return resultBuscarID //404 ou 400
         }
 
     } catch (error) {
-        return message.ERROR_INTERNAL_SERVER_CONTROLLER//500(model)
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER//500(controller)
     }
 
 
@@ -224,19 +204,19 @@ const excluirFilme = async function (filme, id, contentType) {
 const validarDados = async function (filme) {
     let message = JSON.parse(JSON.stringify(config_message))
 
-    if (filme.nome == '' || filme.nome == null || filme.nome == undefined || filme.nome.length > 80) {
+    if (filme.nome == undefined || filme.nome == '' || filme.nome == null || filme.nome.length > 80) {
         message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 
-    } else if (filme.data_lancamento == '' || filme.data_lancamento == null || filme.data_lancamento == undefined || filme.data_lancamento.length != 10) {
+    } else if (filme.data_lancamento == undefined || filme.data_lancamento == '' || filme.data_lancamento == null || filme.data_lancamento.length != 10) {
         message.ERROR_BAD_REQUEST.field = '[DATA_LANCAMENTO] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 
-    } else if (filme.duracao == '' || filme.duracao == null || filme.duracao == undefined || filme.duracao.length < 5) {
+    } else if (filme.duracao == undefined || filme.duracao == '' || filme.duracao == null || filme.duracao.length < 5) {
         message.ERROR_BAD_REQUEST.field = '[DURACAO] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 
-    } else if (filme.sinopse == '' || filme.sinopse == null || filme.sinopse == undefined) {
+    } else if (filme.sinopse == undefined || filme.sinopse == '' || filme.sinopse == null) {
         message.ERROR_BAD_REQUEST.field = '[SINOPSE] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 
@@ -244,7 +224,7 @@ const validarDados = async function (filme) {
         message.ERROR_BAD_REQUEST.field = '[AVALIAÇÃO] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 
-    } else if (filme.valor == '' || filme.valor == null || filme.valor == undefined || filme.valor.split('.')[0].length > 3 || isNaN(filme.valor)) {
+    } else if (filme.valor == undefined || filme.valor == '' || filme.valor == null || filme.valor.split('.')[0].length > 3 || isNaN(filme.valor)) {
         message.ERROR_BAD_REQUEST.field = '[VALOR] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
 

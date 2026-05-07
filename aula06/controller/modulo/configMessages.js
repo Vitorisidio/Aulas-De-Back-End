@@ -26,12 +26,15 @@ const ERROR_NOT_FOUND = { status: false, status_code: 404, message: 'Não foi en
 
 //Mensagens de sucesso da API
 const SUCCESS_CREATED_ITEM = { status: true, status_code: 201, message: 'Registro inserido com sucesso' }
+
 //retorno para o GET 200
 const SUCCESS_RESPONSE = { status: true, status_code: 200 }
-//retorno para o pudate 200
+
+//retorno para o update 200
 const SUCCESS_UPDATED_ITEM = { status: true, status_code: 200, message: 'Registro atualizado com sucesso' }
 
-const SUCCESS_DELETE_ITEM = { status: true, status_code: 200, message: 'Registro deketado com sucesso' }
+//retorno para o delete 200 ou 204
+const SUCCESS_DELETE_ITEM = { status: true, status_code: 200, message: 'Registro excluido com sucesso' }
 
 
 

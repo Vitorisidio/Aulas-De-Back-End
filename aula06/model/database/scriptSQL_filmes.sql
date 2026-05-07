@@ -37,9 +37,20 @@ values (
         'https://br.web.img3.acsta.net/c_310_420/img/5b/ea/5bea1aeac3323aeaaf82449a34fafbbf.jpg'
         );
         
+select * from tbl_filme order by id desc;
+
+delete from tbl_filme where id = 23;
 
 alter table tbl_filme
 	change column avalicao avaliacao decimal(3,2) default null;
         
-        
+        update tbl_filme set
+			nome = 'filme 02',
+            data_lancamento = '2000-01-01',
+            duracao = '02:00',
+            sinopse = 'Testando o update no banco de dados',
+            avaliacao = '2',
+            valor = '10',
+            capa = 'teste capa'
+            where id = 22;
         

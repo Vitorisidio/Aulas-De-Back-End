@@ -30,6 +30,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 //ENDPOINTS
+
 app.post('/v1/senai/locadora/filme', bodyParseJSON, async function (request, response) {
     //recebe o conteúdo dentro do body da requisição
     let dados = request.body
@@ -42,6 +43,7 @@ app.post('/v1/senai/locadora/filme', bodyParseJSON, async function (request, res
     response.json(result)
 })
 
+
 app.get('/v1/senai/locadora/filme', async function (request, response) {
     let result = await controllerFilme.listarFilmes()
 
@@ -49,6 +51,7 @@ app.get('/v1/senai/locadora/filme', async function (request, response) {
     response.json(result)
 })
 
+//end-point para Listar todos os filmes pelo id
 app.get('/v1/senai/locadora/filme/:id', async function (request, response) {
     let id = request.params.id
     
@@ -58,6 +61,7 @@ app.get('/v1/senai/locadora/filme/:id', async function (request, response) {
     response.json(result)
 })
 
+//end-point para atualizar um filme pelo id
 app.put('/v1/senai/locadora/filme/:id', bodyParseJSON, async function(request, response) {
     
     //Recebe o contenty type da requisição
@@ -78,20 +82,13 @@ app.put('/v1/senai/locadora/filme/:id', bodyParseJSON, async function(request, r
 
 })
 
-app.delete('/v1/senai/locadora/filme/:id', bodyParseJSON, async function(request, response) {
+//end-point para deletar um filme pelo id
+app.delete('/v1/senai/locadora/filme/:id', async function(request, response) {
     
-    //Recebe o contenty type da requisição
-    let contentType = request.headers['content-type']
 
-    //Receber o ID do registro a ser atulizado
     let id = request.params.id
 
-    //Receber os dados enviados no corpo de requisição
-    let dados = request.body
-
-    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
-    //obedecendo a ordem de criação na função da controller
-    let result = await controllerFilme.atualizarFilme(dados, id)
+    let result = await controllerFilme.excluirFilme(id)
 
     response.status(result.status_code)
     response.json(result)
