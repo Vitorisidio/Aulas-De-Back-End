@@ -54,3 +54,25 @@ alter table tbl_filme
             capa = 'teste capa'
             where id = 22;
         
+        
+#SCRIPT ATIVIDADE
+create table tbl_atividade(
+id int not null primary key auto_increment,
+nome varchar(80) not null
+);
+
+show tables;
+
+insert into tbl_atividade (
+						nome
+                        )
+values('produtor Executivo'),
+		('Diretor'),
+		('Ator');
+
+select * from tbl_atividade;
+
+delete from tbl_atividade where id = 1;
+
+        update tbl_atividade set
+			nome = 'dublador' where id = 3;        
