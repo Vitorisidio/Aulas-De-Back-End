@@ -90,6 +90,36 @@ const atualizarAtividade = async function (atividade, id, contentType) {
 
 }
 
+const listarAtividade = async function () {
+    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        //chama a função do DAO para retornar a lista de todos os filmes
+        let result = await atividadeDAO.selectAllAtividade()
+
+        //Valida se o DAO conseguiu processar os dados
+        if (result) {
+            //Validação para verificar se existe conteúdo no array
+            if (result.length > 0) {
+                message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
+                message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
+                message.DEFAULT_MESSAGE.response.count = result.length
+                message.DEFAULT_MESSAGE.response.atividade = result
+
+                return message.DEFAULT_MESSAGE //200 (Dados do Filme)
+
+            } else {
+                return message.ERROR_NOT_FOUND //404
+            }
+        } else {
+            return message.ERROR_INTERNAL_SERVER_MODEL //500(model)
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500(controller)
+    }
+}
+
 const buscarAtividade = async function (id) {
     //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
     let message = JSON.parse(JSON.stringify(config_message))
@@ -121,6 +151,35 @@ const buscarAtividade = async function (id) {
 
 }
 
+const excluirAtividade = async function (id) {
+    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+    let message = JSON.parse(JSON.stringify(config_message))
+
+    try {
+        //validação do erro 400 e 404
+        let resultBuscarID = await buscarAtividade(id)
+
+        //validação para verificar se o status é verdadeiro(se existe a atividade)
+        if (resultBuscarID.status) {
+            //Chamar a função do DAO para excluir a atividade
+            let result = await atividadeDAO.deleteAtividade(id)
+
+            if (result) {
+                return message.SUCCESS_DELETE_ITEM //200(Registro excluido)
+            } else {
+                return message.ERROR_INTERNAL_SERVER_MODEL
+            }
+        } else {
+            return resultBuscarID //404 ou 400
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER//500(controller)
+    }
+
+
+}
+
 const validarDados = async function (atividade) {
     let message = JSON.parse(JSON.stringify(config_message))
 
@@ -138,5 +197,8 @@ const validarDados = async function (atividade) {
 module.exports = {
     inserirNovaAtividade,
     atualizarAtividade,
-    buscarAtividade
+    listarAtividade,
+    buscarAtividade,
+    excluirAtividade,
+    validarDados
 }

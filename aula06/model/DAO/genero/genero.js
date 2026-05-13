@@ -14,13 +14,13 @@ const knexConfig = require('../../database_config_knex/knexFile.js')
 const knexConex = knex(knexConfig.development)
 
 //Função para inserir dados na tabela de filme
-const insertAtividade = async function (atividade) {
+const insertGenero = async function (genero) {
 
 
     try {
-        let sql = `insert into tbl_atividade (nome)
+        let sql = `insert into tbl_genero (nome_genero)
                     values(
-                    '${atividade.nome}'
+                    '${genero.nome_genero}'
                     );`
 
     let result = await knexConex.raw(sql)
@@ -37,34 +37,14 @@ const insertAtividade = async function (atividade) {
 
 }
 
-//Função para atualizar um filme existente na tabela
-const updateAtividade = async function (atividade) {
-    //script para  atualizar o BD
-    try {
-        let sql = `update tbl_atividade set
-                nome = '${atividade.nome}'
-                where id = ${atividade.id}`
-        //executa o script SQL no BD
-        let result = await knexConex.raw(sql)
-    
-        if (result) {
-            return true
-        } else {
-            return false
-        }
-        
-    } catch (error) {
-        return false
-    }
-}
 
 //Função para retornar todos os dados da tabela de filme
-const selectAllAtividade = async function () {
+const selectAllGenero = async function () {
     try {
-        //Script para retornar todas as atividades
-        let sql = 'select * from tbl_atividade order by id desc'
+        //Script para retornar todos os filmes
+        let sql = 'select * from tbl_genero order by id'
 
-        //Executa no banco de dados o script SQL para retornar as atividades
+        //Executa no banco de dados o script SQL para retornar os filmes
         let result = await knexConex.raw(sql)
 
         //Validação para verificar se o retorno no BD é um array
@@ -79,11 +59,12 @@ const selectAllAtividade = async function () {
     }
 }
 
+
 // Função para retorna os dados do filme filtrando pelo ID
-const selectByIdAtividade = async function (id) {
+const selectByIdGenero = async function (id) {
 
     try {
-        let sql = `select * from tbl_atividade where id=${id}`
+        let sql = `select * from tbl_genero where id=${id}`
 
         let result = await knexConex.raw(sql)
 
@@ -99,10 +80,32 @@ const selectByIdAtividade = async function (id) {
 
 }
 
-const deleteAtividade = async function (id) {
+//Função para atualizar um filme existente na tabela
+const updateGenero = async function (genero) {
 
     try {
-        let sql = `delete from tbl_atividade where id=${id}`
+        let sql = `update tbl_genero set
+                nome_genero = '${genero.nome_genero}'
+                where id = ${genero.id}`
+        //executa o script SQL no BD
+        let result = await knexConex.raw(sql)
+    
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+        
+    } catch (error) {
+        return false
+    }
+}
+
+
+const deleteGenero = async function (id) {
+
+    try {
+        let sql = `delete from tbl_genero where id=${id}`
 
         let result = await knexConex.raw(sql)
 
@@ -115,12 +118,13 @@ const deleteAtividade = async function (id) {
     } catch (error) {
         return false
     }
+
 }
 
 module.exports = {
-    insertAtividade,
-    updateAtividade,
-    selectAllAtividade,
-    selectByIdAtividade,
-    deleteAtividade
+    insertGenero,
+    selectAllGenero,
+    selectByIdGenero,
+    updateGenero,
+    deleteGenero
 }

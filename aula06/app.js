@@ -13,6 +13,7 @@ const bodyParse = require('body-parser')
 //import das controllers do projeto
 const controllerFilme = require('./controller/filme/controller_filme.js')
 const controllerAtividade = require('./controller/atividade/controller_atividade.js')
+const controllerGenero = require('./controller/genero/controller_genero.js')
 
 //Criando um objeto para manipular dados do body da API em formato JSON
 const bodyParseJSON = bodyParse.json()
@@ -113,8 +114,117 @@ app.post('/v1/senai/locadora/atividade', bodyParseJSON, async function (request,
 })
 
 
+app.get('/v1/senai/locadora/atividade', async function (request, response) {
+    let result = await controllerAtividade.listarAtividade()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/atividade/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerAtividade.buscarAtividade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/atividade/:id', bodyParseJSON, async function(request, response) {
+    
+    //Recebe o contenty type da requisição
+    let contentType = request.headers['content-type']
+
+    //Receber o ID do registro a ser atulizado
+    let id = request.params.id
+
+    //Receber os dados enviados no corpo de requisição
+    let dados = request.body
+
+    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
+    //obedecendo a ordem de criação na função da controller
+    let result = await controllerAtividade.atualizarAtividade(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/atividade/:id', async function(request, response) {
+    
+
+    let id = request.params.id
+
+    let result = await controllerAtividade.excluirAtividade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
 
 
+
+//------------------------------------------END-POINT GENERO---------------------------//
+
+app.post('/v1/senai/locadora/genero', bodyParseJSON, async function (request, response) {
+    //recebe o conteúdo dentro do body da requisição
+    let dados = request.body
+    //Recebe o content type da requisição para validar se é um Json
+    let contentType = request.headers['content-type']
+    
+    let result = await controllerGenero.inserirNovoGenero(dados, contentType)
+    
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/genero', async function (request, response) {
+    let result = await controllerGenero.listarGenero()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/genero/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerGenero.buscarGenero(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/genero/:id', bodyParseJSON, async function(request, response) {
+    
+    //Recebe o contenty type da requisição
+    let contentType = request.headers['content-type']
+
+    //Receber o ID do registro a ser atulizado
+    let id = request.params.id
+
+    //Receber os dados enviados no corpo de requisição
+    let dados = request.body
+
+    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
+    //obedecendo a ordem de criação na função da controller
+    let result = await controllerGenero.atualizarGenero(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/genero/:id', async function(request, response) {
+    
+
+    let id = request.params.id
+
+    let result = await controllerGenero.excluirGenero(id)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
 
 //serve para inicializar a Api para receber requisições
 app.listen(8080, function () {

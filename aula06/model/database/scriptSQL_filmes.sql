@@ -75,4 +75,28 @@ select * from tbl_atividade;
 delete from tbl_atividade where id = 1;
 
         update tbl_atividade set
-			nome = 'dublador' where id = 3;        
+			nome = 'dublador' where id = 3;       
+            
+            
+            
+            
+#SCRIPT GENERO
+
+create table tbl_genero(
+id int not null primary key auto_increment,
+nome_genero varchar(80) not null
+);
+
+insert into tbl_genero (
+						nome_genero
+                        )
+values('Comédia'),
+		('Terror'),
+		('ação');
+        
+select * from tbl_genero;
+
+delete from tbl_genero where id = 1;
+
+        update tbl_genero set
+			nome_genero = 'Romance' where id = 3;
