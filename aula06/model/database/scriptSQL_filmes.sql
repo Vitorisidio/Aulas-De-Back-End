@@ -21,7 +21,7 @@ insert into tbl_filme (
 						data_lancamento,
                         duracao, 
                         sinopse, 
-                        avalicao, 
+                        avaliacao, 
                         valor, 
                         capa
                         )
@@ -81,7 +81,6 @@ delete from tbl_atividade where id = 1;
             
             
 #SCRIPT GENERO
-
 create table tbl_genero(
 id int not null primary key auto_increment,
 nome_genero varchar(80) not null
@@ -100,3 +99,36 @@ delete from tbl_genero where id = 1;
 
         update tbl_genero set
 			nome_genero = 'Romance' where id = 3;
+            
+#SCRIPT CLASSIFICAÇÃO
+
+create table tbl_classificacao(
+	id int not null auto_increment primary key,
+    sigla varchar(5) not null,
+    nome varchar(50) not null,
+    caracteristica text not null
+);
+
+insert into tbl_classificacao (
+									sigla,
+                                    nome,
+                                    caracteristica
+                                    )
+values(
+		'L',
+		'Livre',
+		'Livre para todos os públicos'
+        ),
+        (
+		'10',
+		'maior de 10 anos',
+		'conteúdo sensivel para menores de 10 anos'
+        );
+
+select * from tbl_classificacao;
+
+delete from tbl_classificacao where id = 1;
+
+        update tbl_classificacao set
+			sigla = 'L' where id = 1;
+

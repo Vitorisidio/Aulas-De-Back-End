@@ -1,19 +1,9 @@
-/*------------------------------------------------------------
-* Objetivo: Arquivo responsável pelo CRUD no Banco de dados MySQL na tabela filme
-* Data: 15/04/2026
-* Autor: Vitor
-* Versão: 1.0
-------------------------------------------------------------*/
-//Import da biblioteca para gerenciar o banco de dados Mysql no node.JS
 const knex = require('knex')
 
-//import do arquivo de configuração para conexão com BD Mysql
 const knexConfig = require('../../database_config_knex/knexFile.js')
 
-//Criar a conexão com o BD Mysql
 const knexConex = knex(knexConfig.development)
 
-//Função para inserir dados na tabela de filme
 const insertGenero = async function (genero) {
 
 
@@ -38,7 +28,6 @@ const insertGenero = async function (genero) {
 }
 
 
-//Função para retornar todos os dados da tabela de filme
 const selectAllGenero = async function () {
     try {
         //Script para retornar todos os filmes
@@ -60,7 +49,6 @@ const selectAllGenero = async function () {
 }
 
 
-// Função para retorna os dados do filme filtrando pelo ID
 const selectByIdGenero = async function (id) {
 
     try {
@@ -80,7 +68,6 @@ const selectByIdGenero = async function (id) {
 
 }
 
-//Função para atualizar um filme existente na tabela
 const updateGenero = async function (genero) {
 
     try {

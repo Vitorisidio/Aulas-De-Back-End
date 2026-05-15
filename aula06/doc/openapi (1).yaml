@@ -1,0 +1,457 @@
+openapi: 3.0.3
+info:
+  title: Projeto do Filmes DS2M - SENAI Jandira
+  description: API destinada para controlar Filmes
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.4.26
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://
+paths:
+  /v1/senai/locadora/filme:
+    post:
+      tags:
+        - filme
+      summary: Adiciona um novo Filme
+      description: Adiciona um novo Filme no Banco de Dados
+      requestBody:
+        description: JSON contendo os dados do novo Filme a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Model
+    get:
+      tags:
+        - filme
+      summary: Lista todos os filmes
+      description: Listagem de todos os filmes registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filme'          
+           
+        '404':
+          description: Not Found
+  /v1/senai/locadora/filme/{id}:
+    get:
+      tags:
+        - filme
+      summary: Busca um filme pelo ID
+      description: Retorna um filme pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para retornar o filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filme'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Filme not found
+    put:
+      tags:
+        - filme
+      summary: Atualizar um filme existente pelo ID
+      description: Localizar e atualizar um filme buscando pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar e atualizar o filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Daados para atualizar o filme
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+    delete:
+      tags:
+        - filme
+      summary: Excluir um filme pelo Id
+      description: Localizar e excluir um filme pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar o Filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+  
+
+
+# ------------------------------------------------DOCUMENTAÇÃO ATIVIDADE-----------------------------------------------------------------------
+
+  /v1/senai/locadora/atividade:
+    post:
+      tags:
+        - atividade
+      summary: Adiciona uma nova Atividade
+      description: Adiciona uma nova Atividade no Banco de Dados
+      requestBody:
+        description: JSON contendo os dados da nova Atividade a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Atividade'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Model
+
+    get:
+      tags:
+        - atividade
+      summary: Lista todas as atividades
+      description: Listagem de todas as atividades registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Atividade'
+
+        '404':
+          description: Not Found
+
+  /v1/senai/locadora/atividade/{id}:
+    get:
+      tags:
+        - atividade
+      summary: Busca uma atividade pelo ID
+      description: Retorna uma atividade pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para retornar a atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atividade'
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    put:
+      tags:
+        - atividade
+      summary: Atualizar uma atividade existente pelo ID
+      description: Localizar e atualizar uma atividade buscando pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar e atualizar a atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      requestBody:
+        description: Dados para atualizar a atividade
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Atividade'
+        required: true
+
+      responses:
+        '200':
+          description: Successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    delete:
+      tags:
+        - atividade
+      summary: Excluir uma atividade pelo ID
+      description: Localizar e excluir uma atividade pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar a atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+
+
+
+#-----------------------------------------------DOCUMENTAÇÃO GENERO-----------------------------------------------------------
+
+  /v1/senai/locadora/genero:
+    post:
+      tags:
+        - genero
+      summary: Adiciona um novo genero
+      description: Adiciona um novo genero no Banco de Dados
+      requestBody:
+        description: JSON contendo os dados do novo genero a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Model
+
+    get:
+      tags:
+        - genero
+      summary: Lista todos os genero
+      description: Listagem de todos os genero registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genero'
+
+        '404':
+          description: Not Found
+
+  /v1/senai/locadora/genero/{id}:
+    get:
+      tags:
+        - genero
+      summary: Busca um genero pelo ID
+      description: Retorna um genero pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para retornar o genero
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genero'
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    put:
+      tags:
+        - genero
+      summary: Atualizar um genero existente pelo ID
+      description: Localizar e atualizar um genero buscando pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar e atualizar a atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      requestBody:
+        description: Dados para atualizar o genero
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+        required: true
+
+      responses:
+        '200':
+          description: Successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    delete:
+      tags:
+        - genero
+      summary: Excluir um genero pelo ID
+      description: Localizar e excluir um genero pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar o genero
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+
+
+
+#------------------------------------------------COMPONENTES-------------------------------------------------------------------
+
+
+components:
+  schemas:
+    Filme:
+      required:
+        - nome
+        - sinopse
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        sinopse:
+          type: string
+        data_lancamento:
+          type: string
+        duracao:
+          type: string
+        valor:
+          type: integer
+        avaliacao:
+          type: integer
+        capa:
+          type: string
+
+
+    Atividade:
+      required:
+        - nome
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+
+    Genero:
+      required:
+        - nome_genero
+      type: object
+      properties:
+        id:
+          type: integer
+        nome_genero:
+          type: string
+
+
+  requestBodies:
+    Filme:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Filme'
+
+    Atividade:
+        description: Objeto que deve ser enviado no Body das requisicoes
+        content:
+          application/json:
+           schema:
+            $ref: '#/components/schemas/Atividade'
+
+    Genero:
+        description: Objeto que deve ser enviado no Body das requisicoes
+        content:
+          application/json:
+           schema:
+            $ref: '#/components/schemas/Genero'

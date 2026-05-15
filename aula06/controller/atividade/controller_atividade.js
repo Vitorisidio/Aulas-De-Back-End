@@ -38,26 +38,21 @@ const inserirNovaAtividade = async function (atividade, contentType) {
 }
 
 const atualizarAtividade = async function (atividade, id, contentType) {
-    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+    
     let message = JSON.parse(JSON.stringify(config_message))
     try {
-        //Validação do Contenty type para receber apenas Json
+        
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            //validação para o ID incorreto
+            
             let resultBuscarID = await buscarAtividade(id)
 
-            //Se a função buscar encontrar o filme o atributo status do JSON será verdadeiro
-            //Isso significa que o filme existe na base, caso não retorne true, então
-            //O retorno da função poderá ser 400 ou 404 ou até mesmo um 500
             if (resultBuscarID.status) {
                 let validar = await validarDados(atividade)
 
-                //validação de campos obrigatórios para atualização(body)
+                
                 if (!validar) {
-                    //Adiciono o atributo ID do Filme no JSON para ser enviado ao DAO
                     atividade.id = id
 
-                    //chama a função do DAO para atualizar o FIlme (dados e o ID)
                     let result = await atividadeDAO.updateAtividade(atividade)
 
                     if (result) {
@@ -91,15 +86,15 @@ const atualizarAtividade = async function (atividade, id, contentType) {
 }
 
 const listarAtividade = async function () {
-    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+
     let message = JSON.parse(JSON.stringify(config_message))
     try {
-        //chama a função do DAO para retornar a lista de todos os filmes
+
         let result = await atividadeDAO.selectAllAtividade()
 
-        //Valida se o DAO conseguiu processar os dados
+
         if (result) {
-            //Validação para verificar se existe conteúdo no array
+
             if (result.length > 0) {
                 message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
                 message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
@@ -121,7 +116,7 @@ const listarAtividade = async function () {
 }
 
 const buscarAtividade = async function (id) {
-    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+
     let message = JSON.parse(JSON.stringify(config_message))
     try {
         if (id == undefined || id == '' || id == null || isNaN(id)) {
@@ -152,16 +147,15 @@ const buscarAtividade = async function (id) {
 }
 
 const excluirAtividade = async function (id) {
-    //criando um clone do objeto JSON para manipular sua estrutura local sem modificar sua estrutura original
+
     let message = JSON.parse(JSON.stringify(config_message))
 
     try {
-        //validação do erro 400 e 404
+
         let resultBuscarID = await buscarAtividade(id)
 
-        //validação para verificar se o status é verdadeiro(se existe a atividade)
         if (resultBuscarID.status) {
-            //Chamar a função do DAO para excluir a atividade
+
             let result = await atividadeDAO.deleteAtividade(id)
 
             if (result) {

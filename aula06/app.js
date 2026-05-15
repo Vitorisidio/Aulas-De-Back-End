@@ -14,6 +14,8 @@ const bodyParse = require('body-parser')
 const controllerFilme = require('./controller/filme/controller_filme.js')
 const controllerAtividade = require('./controller/atividade/controller_atividade.js')
 const controllerGenero = require('./controller/genero/controller_genero.js')
+const controllerClassificacao = require('./controller/classificacao/controller_classificacao.js')
+
 
 //Criando um objeto para manipular dados do body da API em formato JSON
 const bodyParseJSON = bodyParse.json()
@@ -225,6 +227,39 @@ app.delete('/v1/senai/locadora/genero/:id', async function(request, response) {
     response.json(result)
 
 })
+
+
+
+//------------------------------------------END-POINT CLASSIFICAÇÃO---------------------------//
+
+app.post('/v1/senai/locadora/classificacao', bodyParseJSON, async function (request, response) {
+    //recebe o conteúdo dentro do body da requisição
+    let dados = request.body
+    //Recebe o content type da requisição para validar se é um Json
+    let contentType = request.headers['content-type']
+    
+    let result = await controllerClassificacao.inserirNovaClassificacao(dados, contentType)
+    
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/classificacao', async function (request, response) {
+    let result = await controllerClassificacao.listarClassificacao()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/classificacao/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerClassificacao.buscarClassificacao(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
 
 //serve para inicializar a Api para receber requisições
 app.listen(8080, function () {
