@@ -382,6 +382,133 @@ paths:
           description: Atividade not found
 
 
+#-----------------------------------------------DOCUMENTAÇÃO classificacao-----------------------------------------------------------
+
+  /v1/senai/locadora/classificacao:
+    post:
+      tags:
+        - classificacao
+      summary: Adiciona uma nova classificacao
+      description: Adiciona uma nova classificacao no Banco de Dados
+      requestBody:
+        description: JSON contendo os dados do novo classificacao a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Classificacao'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Model
+
+    get:
+      tags:
+        - classificacao
+      summary: Lista todas as classificacao
+      description: Listagem de todas as classificacao registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Classificacao'
+
+        '404':
+          description: Not Found
+
+  /v1/senai/locadora/classificacao/{id}:
+    get:
+      tags:
+        - classificacao
+      summary: Busca uma classificacao pelo ID
+      description: Retorna uma classificacao pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID para retornar a classificacao
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Classificacao'
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    put:
+      tags:
+        - classificacao
+      summary: Atualizar uma classificacao existente pelo ID
+      description: Localizar e atualizar uma classificacao buscando pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar e atualizar a atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      requestBody:
+        description: Dados para atualizar a classificacao
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Classificacao'
+        required: true
+
+      responses:
+        '200':
+          description: Successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
+
+    delete:
+      tags:
+        - classificacao
+      summary: Excluir uma classificacao pelo ID
+      description: Localizar e excluir uma classificacao pelo ID
+
+      parameters:
+        - name: id
+          in: path
+          description: ID para localizar a classificacao
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+
+        '400':
+          description: Invalid ID supplied
+
+        '404':
+          description: Atividade not found
 
 
 #------------------------------------------------COMPONENTES-------------------------------------------------------------------
@@ -433,6 +560,21 @@ components:
         nome_genero:
           type: string
 
+          
+    Classificacao:
+      required:
+        - nome
+        - sigla
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        sigla:
+          type: string
+        caracteristica:
+          type: string
 
   requestBodies:
     Filme:
@@ -455,3 +597,10 @@ components:
           application/json:
            schema:
             $ref: '#/components/schemas/Genero'
+
+    Classificacao:
+        description: Objeto que deve ser enviado no Body das requisicoes
+        content:
+          application/json:
+           schema:
+            $ref: '#/components/schemas/Classificacao'

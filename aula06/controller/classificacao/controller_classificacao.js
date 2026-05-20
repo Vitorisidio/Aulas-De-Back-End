@@ -70,7 +70,7 @@ const listarClassificacao = async function () {
                 message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
                 message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
                 message.DEFAULT_MESSAGE.response.count = result.length
-                message.DEFAULT_MESSAGE.response.genero = result
+                message.DEFAULT_MESSAGE.response.classificacao = result
 
                 return message.DEFAULT_MESSAGE //200 (Dados do Filme)
 
@@ -99,7 +99,7 @@ const buscarClassificacao = async function (id) {
                 if (result.length > 0) {
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
-                    message.DEFAULT_MESSAGE.response = result
+                    message.DEFAULT_MESSAGE.response.classificacao = result
 
                     return message.DEFAULT_MESSAGE//200
                 } else {
@@ -116,9 +116,81 @@ const buscarClassificacao = async function (id) {
 
 }
 
+const atualizarClassificacao = async function (classificacao, id, contentType) {
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
+            //validação para o ID incorreto
+            let resultBuscarID = await buscarClassificacao(id)
+
+            if (resultBuscarID.status) {
+                let validar = await validarDados(classificacao)
+
+                if (!validar) {
+                    classificacao.id = id
+
+                    let result = await classificacaoDAO.updateClassificacao(classificacao)
+
+                    if (result) {
+                        message.DEFAULT_MESSAGE.status = message.SUCCESS_UPDATED_ITEM.status
+                        message.DEFAULT_MESSAGE.status_code = message.SUCCESS_UPDATED_ITEM.status_code
+                        message.DEFAULT_MESSAGE.message = message.SUCCESS_UPDATED_ITEM.message
+                        message.DEFAULT_MESSAGE.response = classificacao
+
+                        return message.DEFAULT_MESSAGE //200
+
+                    } else {
+                        return message.ERROR_INTERNAL_SERVER_MODEL //500
+                    }
+
+                } else {
+                    return validar //400
+                }
+            } else {
+                return resultBuscarID // 400 ou 404 ou 500
+            }
+
+
+        } else {
+            return message.ERROR_CONTENT_TYPE //415
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER//500(model)
+    }
+
+}
+
+const excluirClassificacao = async function (id) {
+    let message = JSON.parse(JSON.stringify(config_message))
+
+    try {
+        let resultBuscarID = await buscarClassificacao(id)
+
+        if (resultBuscarID.status) {
+            let result = await classificacaoDAO.deleteClassificacao(id)
+
+            if (result) {
+                return message.SUCCESS_DELETE_ITEM //200(Registro excluido)
+            } else {
+                return message.ERROR_INTERNAL_SERVER_MODEL
+            }
+        } else {
+            return resultBuscarID //404 ou 400
+        }
+
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER//500(controller)
+    }
+
+
+}
+
 module.exports = {
     validarDados,
     inserirNovaClassificacao,
     listarClassificacao,
     buscarClassificacao,
+    atualizarClassificacao,
+    excluirClassificacao
 }

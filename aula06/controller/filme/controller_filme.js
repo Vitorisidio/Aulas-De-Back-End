@@ -12,6 +12,9 @@ const config_message = require('../modulo/configMessages.js')
 //Impot do arquivo DAO para fazer o CRUD do filme no banco de dados
 const filmeDAO = require('../../model/DAO/filme/filme.js')
 
+//Import de arquivo de controller
+const controller_classificacao = require('../classificacao/controller_classificacao.js')
+
 //Função para inserir um novo Filme
 const inserirNovoFilme = async function (filme, contentType) {
 
@@ -120,6 +123,18 @@ const listarFilmes = async function () {
         if (result) {
             //Validação para verificar se existe conteúdo no array
             if (result.length > 0) {
+
+                //percorre o array de filmes para indentificar os dados da classificação
+                for(filme of result){
+                    //Busca na controller de classificação o ID referente aos dados
+                    let resultClassificacao = await controller_classificacao.buscarClassificacao(filme.id_classificacao)
+                    //Se a classificação foi encontrada
+                    if(resultClassificacao.status){
+                        filme.classificacao = resultClassificacao.response.classificacao
+                        delete filme.id_classificacao
+                    }
+                }
+
                 message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
                 message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
                 message.DEFAULT_MESSAGE.response.count = result.length
@@ -152,6 +167,18 @@ const buscarFilme = async function (id) {
 
             if (result) {
                 if (result.length > 0) {
+
+                 //percorre o array de filmes para indentificar os dados da classificação
+                for(filme of result){
+                    //Busca na controller de classificação o ID referente aos dados
+                    let resultClassificacao = await controller_classificacao.buscarClassificacao(filme.id_classificacao)
+                    //Se a classificação foi encontrada
+                    if(resultClassificacao.status){
+                        filme.classificacao = resultClassificacao.response.classificacao
+                        delete filme.id_classificacao
+                    }
+                }
+
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_RESPONSE.status_code
                     message.DEFAULT_MESSAGE.response.filme = result
@@ -231,7 +258,15 @@ const validarDados = async function (filme) {
     } else if (filme.capa.length > 255) {
         message.ERROR_BAD_REQUEST.field = '[CAPA] INVÁLIDO'
         return message.ERROR_BAD_REQUEST//400
-    } else {
+
+        //Validação para a FK da classificação
+    } else if (filme.id_classificacao == undefined || filme.id_classificacao == '' || filme.id_classificacao == null || isNaN(filme.id_classificacao) || filme.id_classificacao <= 0) {
+        message.ERROR_BAD_REQUEST.field = '[ID_CLASSIFICAÇÃO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST//400
+
+    }
+    
+    else {
         return false
     }
 

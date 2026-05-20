@@ -131,4 +131,31 @@ delete from tbl_classificacao where id = 1;
 
         update tbl_classificacao set
 			sigla = 'L' where id = 1;
+            
+            
+#SCRIPT NACIONALIDADE
 
+create table tbl_nacionalidade(
+	id int not null auto_increment primary key,
+    sigla varchar(5) not null,
+    nome_pais varchar(85) not null,
+    continente  varchar(85)
+);
+
+insert into tbl_nacionalidade (
+									sigla,
+                                    nome_pais,
+                                    continente
+                                    )
+values(
+		'BR',
+		'Brasil',
+		'Americano'
+        );
+
+select * from tbl_nacionalidade;
+
+delete from tbl_nacionalidade where id = 1;
+
+        update tbl_nacionalidade set
+			sigla = 'br' where id = 1;

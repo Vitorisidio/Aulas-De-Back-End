@@ -4,18 +4,18 @@ const knexConfig = require('../../database_config_knex/knexFile.js')
 
 const knexConex = knex(knexConfig.development)
 
-const insertClassificacao = async function (classificacao) {
+const insertNacionalidade = async function (nacionalidade) {
 
     try {
-        let sql = `insert into tbl_classificacao (
-									sigla,
-                                    nome,
-                                    caracteristica
+        let sql = `insert into tbl_nacionalidade (
+                                    sigla,
+                                    nome_pais,
+                                    continente
                                     )
                     values(
-		                    '${classificacao.sigla}',
-		                    '${classificacao.nome}',
-		                    '${classificacao.caracteristica}'
+                            '${nacionalidade.sigla}',
+                            '${nacionalidade.nome_pais}',
+                            '${nacionalidade.continente}'
                             );`
 
     let result = await knexConex.raw(sql)
@@ -32,9 +32,9 @@ const insertClassificacao = async function (classificacao) {
     
 }
 
-const selectAllClassificacao = async function () {
+const selectAllNacionalidade = async function () {
     try {
-        let sql = 'select * from tbl_classificacao order by id'
+        let sql = 'select * from tbl_nacionalidade order by id'
 
         let result = await knexConex.raw(sql)
 
@@ -48,10 +48,10 @@ const selectAllClassificacao = async function () {
     }
 }
 
-const selectByIdClassificacao = async function (id) {
+const selectByIdNacionalidade = async function (id) {
 
     try {
-        let sql = `select * from tbl_classificacao where id=${id}`
+        let sql = `select * from tbl_nacionalidade where id=${id}`
 
         let result = await knexConex.raw(sql)
 
@@ -67,14 +67,14 @@ const selectByIdClassificacao = async function (id) {
 
 }
 
-const updateClassificacao = async function (classificacao) {
+const updateNacionalidade = async function (nacionalidade) {
 
     try {
-        let sql = `update tbl_classificacao set
-                sigla = '${classificacao.sigla}',
-                nome = '${classificacao.nome}',
-                caracteristica = '${classificacao.caracteristica}'
-                where id = ${classificacao.id}`
+        let sql = `update tbl_nacionalidade set
+                sigla = '${nacionalidade.sigla}',
+                nome_pais = '${nacionalidade.nome_pais}',
+                continente = '${nacionalidade.continente}'
+                where id = ${nacionalidade.id}`
         //executa o script SQL no BD
         let result = await knexConex.raw(sql)
     
@@ -89,10 +89,10 @@ const updateClassificacao = async function (classificacao) {
     }
 }
 
-const deleteClassificacao = async function (id) {
+const deleteNacionalidade = async function (id) {
 
     try {
-        let sql = `delete from tbl_classificacao where id=${id}`
+        let sql = `delete from tbl_nacionalidade where id=${id}`
 
         let result = await knexConex.raw(sql)
 
@@ -109,9 +109,9 @@ const deleteClassificacao = async function (id) {
 }
 
 module.exports = {
-    insertClassificacao,
-    selectAllClassificacao,
-    selectByIdClassificacao,
-    updateClassificacao,
-    deleteClassificacao
+    insertNacionalidade,
+    selectAllNacionalidade,
+    selectByIdNacionalidade,
+    updateNacionalidade,
+    deleteNacionalidade
 }
