@@ -314,6 +314,47 @@ app.get('/v1/senai/locadora/nacionalidade', async function (request, response) {
     response.json(result)
 })
 
+app.get('/v1/senai/locadora/nacionalidade/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerNacionalidade.buscarNacionalidade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/nacionalidade/:id', bodyParseJSON, async function(request, response) {
+    
+    //Recebe o contenty type da requisição
+    let contentType = request.headers['content-type']
+
+    //Receber o ID do registro a ser atulizado
+    let id = request.params.id
+
+    //Receber os dados enviados no corpo de requisição
+    let dados = request.body
+
+    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
+    //obedecendo a ordem de criação na função da controller
+    let result = await controllerNacionalidade.atualizarNacionalidade(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/nacionalidade/:id', async function(request, response) {
+    
+
+    let id = request.params.id
+
+    let result = await controllerNacionalidade.excluirNacionalidade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
 
 //serve para inicializar a Api para receber requisições
 app.listen(8080, function () {

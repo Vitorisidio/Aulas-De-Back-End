@@ -55,7 +55,8 @@ alter table tbl_filme
             where id = 22;
         
         
-#SCRIPT ATIVIDADE
+#SCRIPT ATIVIDADE------------------------------------------------------------------
+
 create table tbl_atividade(
 id int not null primary key auto_increment,
 nome varchar(80) not null
@@ -80,7 +81,8 @@ delete from tbl_atividade where id = 1;
             
             
             
-#SCRIPT GENERO
+#SCRIPT GENERO---------------------------------------------------------------------------
+
 create table tbl_genero(
 id int not null primary key auto_increment,
 nome_genero varchar(80) not null
@@ -91,6 +93,9 @@ insert into tbl_genero (
                         )
 values('Comédia'),
 		('Terror'),
+		('Romance'),
+		('Drama'),
+		('Suspense'),
 		('ação');
         
 select * from tbl_genero;
@@ -100,7 +105,7 @@ delete from tbl_genero where id = 1;
         update tbl_genero set
 			nome_genero = 'Romance' where id = 3;
             
-#SCRIPT CLASSIFICAÇÃO
+#SCRIPT CLASSIFICAÇÃO------------------------------------------------------------
 
 create table tbl_classificacao(
 	id int not null auto_increment primary key,
@@ -133,7 +138,7 @@ delete from tbl_classificacao where id = 1;
 			sigla = 'L' where id = 1;
             
             
-#SCRIPT NACIONALIDADE
+#SCRIPT NACIONALIDADE--------------------------------------------------------
 
 create table tbl_nacionalidade(
 	id int not null auto_increment primary key,
