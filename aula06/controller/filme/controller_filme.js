@@ -14,6 +14,7 @@ const filmeDAO = require('../../model/DAO/filme/filme.js')
 
 //Import de arquivo de controller
 const controller_classificacao = require('../classificacao/controller_classificacao.js')
+const controller_filme_genero = require('./controller_filme_genero.js')
 
 //Função para inserir um novo Filme
 const inserirNovoFilme = async function (filme, contentType) {
@@ -39,6 +40,19 @@ const inserirNovoFilme = async function (filme, contentType) {
 
                     filme.id = result
 
+                    //Manipulação de dados para inserir os Generos do filme
+                    for(genero of filme.genero){
+                        //Cria o objeto Json com os ids do filme e do genero
+                        let filmeGenero = { "id_filme": filme.id,
+                                        "id_genero": genero.id
+                                    }
+                        //Chama a controller do filme genero para inserir os IDs
+                        let resultInsertGenero = await controller_filme_genero.inserirNovoFilmeGenero(filmeGenero)
+
+                        if(!resultInsertGenero.status){
+                            return message. SUCCESS_CREATED_ITEM_WARNING // 201 com alerta de dados não inserido
+                        }
+                    }
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_CREATED_ITEM.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_CREATED_ITEM.status_code
                     message.DEFAULT_MESSAGE.message = message.SUCCESS_CREATED_ITEM.message
@@ -133,6 +147,13 @@ const listarFilmes = async function () {
                         filme.classificacao = resultClassificacao.response.classificacao
                         delete filme.id_classificacao
                     }
+
+                    //Cria o objeto de generos relacionados ao Filme
+                    let resultGenero = await controller_filme_genero.buscarGeneroIdFilme(filme.id)
+                    if(resultGenero.status){
+                        filme.genero = resultGenero.response.filme_genero
+                    }
+
                 }
 
                 message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status

@@ -164,3 +164,44 @@ delete from tbl_nacionalidade where id = 1;
 
         update tbl_nacionalidade set
 			sigla = 'br' where id = 1;
+            
+#SCRIPT ATOR--------------------------------------------------------
+
+create table tbl_ator(
+	id int not null auto_increment primary key,
+    nome varchar(100) not null,
+    biografia  text not null,
+    foto  varchar(256) not null,
+    data_nascimento date
+);
+
+insert into tbl_ator (
+									nome,
+                                    biografia,
+                                    foto,
+                                    data_nascimento
+                                    )
+values(
+		'Brad Pitt',
+		'Brad Pitt é um ator norte-americano conhecido vários filmes aclamados,
+        entre eles Seven - Sete Crimes Capitais, O Curioso Caso de Benjamin Button e Era Uma Vez em Hollywood.
+        Nascido em Oklahoma, Pitt se mudou para Missouri com a família ainda criança, onde passou toda a juventude
+        e começo da vida adulta. Pitt ingressou na Universidade de Missouri em 1982 no curso de Jornalismo, mas
+        largou a faculdade para se concentrar na carreira de ator.',
+		'https://br.web.img3.acsta.net/c_310_420/pictures/19/03/19/17/23/0985270.jpg',
+        '1963-12-18'
+        );
+
+select * from tbl_ator;
+
+delete from tbl_ator where id = 1;	
+
+        update tbl_ator set
+			nome = 'Brad Pitt' where id = 1;
+            
+            
+ select * from tbl_filme_genero;
+
+delete from tbl_filme_genero;
+           
+            

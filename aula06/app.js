@@ -229,8 +229,6 @@ app.delete('/v1/senai/locadora/genero/:id', async function(request, response) {
 
 })
 
-
-
 //------------------------------------------END-POINT CLASSIFICAÇÃO---------------------------//
 
 app.post('/v1/senai/locadora/classificacao', bodyParseJSON, async function (request, response) {
