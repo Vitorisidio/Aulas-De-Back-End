@@ -16,6 +16,8 @@ const controllerAtividade = require('./controller/atividade/controller_atividade
 const controllerGenero = require('./controller/genero/controller_genero.js')
 const controllerClassificacao = require('./controller/classificacao/controller_classificacao.js')
 const controllerNacionalidade = require('./controller/nacionalidade/controller_nacionalidade.js')
+const controllerAtor = require('./controller/ator/controller_ator.js')
+const controllerDiretor = require('./controller/diretor/controller_diretor.js')
 
 
 //Criando um objeto para manipular dados do body da API em formato JSON
@@ -353,6 +355,130 @@ app.delete('/v1/senai/locadora/nacionalidade/:id', async function(request, respo
 
 })
 
+
+//------------------------------------------END-POINT ATOR---------------------------//
+
+app.post('/v1/senai/locadora/ator', bodyParseJSON, async function (request, response) {
+    //recebe o conteúdo dentro do body da requisição
+    let dados = request.body
+    //Recebe o content type da requisição para validar se é um Json
+    let contentType = request.headers['content-type']
+    
+    let result = await controllerAtor.inserirNovoAtor(dados, contentType)
+    
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/ator', async function (request, response) {
+    let result = await controllerAtor.listarAtor()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/ator/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerAtor.buscarAtor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/ator/:id', bodyParseJSON, async function(request, response) {
+    
+    //Recebe o contenty type da requisição
+    let contentType = request.headers['content-type']
+
+    //Receber o ID do registro a ser atulizado
+    let id = request.params.id
+
+    //Receber os dados enviados no corpo de requisição
+    let dados = request.body
+
+    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
+    //obedecendo a ordem de criação na função da controller
+    let result = await controllerAtor.atualizarAtor(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/ator/:id', async function(request, response) {
+    
+
+    let id = request.params.id
+
+    let result = await controllerAtor.excluirAtor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+//------------------------------------------END-POINT DIRETOR---------------------------//
+
+app.post('/v1/senai/locadora/diretor', bodyParseJSON, async function (request, response) {
+    //recebe o conteúdo dentro do body da requisição
+    let dados = request.body
+    //Recebe o content type da requisição para validar se é um Json
+    let contentType = request.headers['content-type']
+    
+    let result = await controllerDiretor.inserirNovoDiretor(dados, contentType)
+    
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor', async function (request, response) {
+    let result = await controllerDiretor.listarDiretor()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor/:id', async function (request, response) {
+    let id = request.params.id
+    
+    let result = await controllerDiretor.buscarDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/diretor/:id', bodyParseJSON, async function(request, response) {
+    
+    //Recebe o contenty type da requisição
+    let contentType = request.headers['content-type']
+
+    //Receber o ID do registro a ser atulizado
+    let id = request.params.id
+
+    //Receber os dados enviados no corpo de requisição
+    let dados = request.body
+
+    //Chama a função de atualizar na controller e encaminhando os dados, id e content-type
+    //obedecendo a ordem de criação na função da controller
+    let result = await controllerDiretor.atualizarDiretor(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/diretor/:id', async function(request, response) {
+    
+
+    let id = request.params.id
+
+    let result = await controllerDiretor.excluirDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+
+})
 
 //serve para inicializar a Api para receber requisições
 app.listen(8080, function () {

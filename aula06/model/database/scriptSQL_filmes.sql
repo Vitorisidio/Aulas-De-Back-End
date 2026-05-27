@@ -199,6 +199,36 @@ delete from tbl_ator where id = 1;
         update tbl_ator set
 			nome = 'Brad Pitt' where id = 1;
             
+#SCRIPT DIRETOR--------------------------------------------------------
+
+create table tbl_diretor(
+	id int not null auto_increment primary key,
+    nome varchar(100) not null,
+    biografia  text,
+    foto  varchar(256) not null,
+    data_nascimento date
+);
+
+insert into tbl_diretor (
+									nome,
+                                    biografia,
+                                    foto,
+                                    data_nascimento
+                                    )
+values(
+		'Jon Favreau',
+		'',
+		'https://br.web.img3.acsta.net/c_310_420/pictures/15/09/18/12/27/315343.jpg',
+        '1966-10-19'
+        );
+
+select * from tbl_diretor;
+
+delete from tbl_diretor where id = 1;	
+
+        update tbl_diretor set
+			nome = 'Brad Pitt' where id = 1;
+            
             
  select * from tbl_filme_genero;
 
