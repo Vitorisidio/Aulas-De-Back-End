@@ -15,6 +15,7 @@ const filmeDAO = require('../../model/DAO/filme/filme.js')
 //Import de arquivo de controller
 const controller_classificacao = require('../classificacao/controller_classificacao.js')
 const controller_filme_genero = require('./controller_filme_genero.js')
+const controller_filme_diretor = require('./controller_filme_diretor.js')
 
 //Função para inserir um novo Filme
 const inserirNovoFilme = async function (filme, contentType) {
@@ -40,6 +41,8 @@ const inserirNovoFilme = async function (filme, contentType) {
 
                     filme.id = result
 
+                    //----------------------Genero--------------------------------//
+
                     //Manipulação de dados para inserir os Generos do filme
                     for (genero of filme.genero) {
                         //Cria o objeto Json com os ids do filme e do genero
@@ -54,6 +57,20 @@ const inserirNovoFilme = async function (filme, contentType) {
                             return message.SUCCESS_CREATED_ITEM_WARNING // 201 com alerta de dados não inserido
                         }
                     }
+                    //----------------------Diretor--------------------------------//
+
+                    for (diretor of filme.diretor) {
+                        let filmeDiretor = {
+                            "id_filme": filme.id,
+                            "id_diretor": diretor.id
+                        }
+                        let resultInsertDiretor = await controller_filme_diretor.inserirNovoFilmeDiretor(filmeDiretor)
+
+                        if (!resultInsertDiretor.status) {
+                            return message.SUCCESS_CREATED_ITEM_WARNING // 201 com alerta de dados não inserido
+                        }
+                    }
+
                     message.DEFAULT_MESSAGE.status = message.SUCCESS_CREATED_ITEM.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCCESS_CREATED_ITEM.status_code
                     message.DEFAULT_MESSAGE.message = message.SUCCESS_CREATED_ITEM.message
@@ -100,16 +117,17 @@ const atualizarFilme = async function (filme, id, contentType) {
 
                         //manipulação de dados na tabela de ralação entre filme e genero
                         let resultDeleteGenero = await controller_filme_genero.excluirGenerosIdFilme(filme.id)
-                            console.log(resultDeleteGenero)
+                        console.log(resultDeleteGenero)
+
                         //Após a exclusão de todos os generos relacionados com o filme
                         if (resultDeleteGenero.status) {
-
                             for (genero of filme.genero) {
                                 //Cria o objeto Json com os ids do filme e do genero
                                 let filmeGenero = {
                                     "id_filme": filme.id,
                                     "id_genero": genero.id
                                 }
+
                                 //Chama a controller do filme genero para inserir os IDs
                                 let resultInsertGenero = await controller_filme_genero.inserirNovoFilmeGenero(filmeGenero)
 
@@ -117,9 +135,26 @@ const atualizarFilme = async function (filme, id, contentType) {
                                     return message.SUCCESS_CREATED_ITEM_WARNING // 201 com alerta de dados não inserido
                                 }
                             }
-
                         }
 
+                        //----------------------Diretor--------------------------------//
+                        //manipulação de dados na tabela de ralação entre filme e diretor
+                        let resultDeleteDiretor = await controller_filme_diretor.excluirDiretoresIdFilme(filme.id)
+                        console.log(resultDeleteDiretor)
+
+                        if (resultDeleteDiretor.status) {
+                            for (diretor of filme.diretor) {
+                                let filmeDiretor = {
+                                    "id_filme": filme.id,
+                                    "id_diretor": diretor.id
+                                }
+                                let resultInsertDiretor = await controller_filme_diretor.inserirNovoFilmeDiretor(filmeDiretor)
+
+                                if (!resultInsertDiretor.status) {
+                                    return message.SUCCESS_CREATED_ITEM_WARNING // 201 com alerta de dados não inserido
+                                }
+                            }
+                        }
 
                         message.DEFAULT_MESSAGE.status = message.SUCCESS_UPDATED_ITEM.status
                         message.DEFAULT_MESSAGE.status_code = message.SUCCESS_UPDATED_ITEM.status_code
@@ -179,6 +214,11 @@ const listarFilmes = async function () {
                         filme.genero = resultGenero.response.filme_genero
                     }
 
+                    //Cria o objeto de diretor relacionados ao Filme
+                    let resultDiretor = await controller_filme_diretor.buscarDiretorIdFilme(filme.id)
+                    if (resultDiretor.status) {
+                        filme.diretor = resultDiretor.response.filme_diretor
+                    }
                 }
 
                 message.DEFAULT_MESSAGE.status = message.SUCCESS_RESPONSE.status
@@ -228,6 +268,12 @@ const buscarFilme = async function (id) {
                         let resultGenero = await controller_filme_genero.buscarGeneroIdFilme(filme.id)
                         if (resultGenero.status) {
                             filme.genero = resultGenero.response.filme_genero
+                        }
+
+                        //Cria o objeto de generos relacionados ao Filme
+                        let resultDiretor = await controller_filme_diretor.buscarDiretorIdFilme(filme.id)
+                        if (resultDiretor.status) {
+                            filme.diretor = resultDiretor.response.filme_diretor
                         }
                     }
 

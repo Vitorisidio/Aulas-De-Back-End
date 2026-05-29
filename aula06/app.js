@@ -36,8 +36,8 @@ const corsOptions = {
 //configura as permissões da API através do CORS
 app.use(cors(corsOptions))
 
-//ENDPOINTS
 
+//------------------------------------------END-POINT FILME---------------------------//
 app.post('/v1/senai/locadora/filme', bodyParseJSON, async function (request, response) {
     //recebe o conteúdo dentro do body da requisição
     let dados = request.body
@@ -45,6 +45,7 @@ app.post('/v1/senai/locadora/filme', bodyParseJSON, async function (request, res
     let contentType = request.headers['content-type']
 
     let result = await controllerFilme.inserirNovoFilme(dados, contentType)
+    console.log(result)
 
     response.status(result.status_code)
     response.json(result)
@@ -166,8 +167,6 @@ app.delete('/v1/senai/locadora/atividade/:id', async function(request, response)
     response.json(result)
 
 })
-
-
 
 //------------------------------------------END-POINT GENERO---------------------------//
 
